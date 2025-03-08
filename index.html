@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,11 +8,22 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background: url('https://upload.wikimedia.org/wikipedia/commons/d/d6/AMX-30B_U.S._Army_Armor_%26_Cavalry_Collection.jpg') no-repeat center center fixed;
+            background: url('/images/AMX-30B.jpg') no-repeat center center fixed;
             background-size: cover;
-            color: white;
+            background-color: rgba(255, 255, 255, 0.6);
+            background-blend-mode: lighten;
+            color: black;
             text-align: center;
         }
+
+        h2 {
+            color: black;
+        }
+
+        p {
+            color: white;
+        }
+
         #hashtags {
             margin-top: 10px;
             font-weight: bold;
@@ -20,14 +32,17 @@
             display: inline-block;
             border-radius: 5px;
         }
+
         .input-container {
             margin-bottom: 10px;
         }
+
         input {
             padding: 5px;
             font-size: 16px;
             margin: 5px;
         }
+
         button {
             background: #b22222;
             color: white;
@@ -37,21 +52,26 @@
             cursor: pointer;
             font-size: 16px;
         }
+
         button:hover {
             background: #8b0000;
         }
     </style>
 </head>
+
 <body>
     <h2>Generador de Hashtags para War Thunder</h2>
     <div id="inputsContainer" class="input-container">
-        <input type="text" class="inputPalabra" placeholder="Ingrese una palabra" onkeypress="manejarEnter(event)" onkeydown="manejarBackspace(event)">
+        <input type="text" class="inputPalabra" placeholder="Ingrese una palabra" onkeypress="manejarEnter(event)"
+            onkeydown="manejarBackspace(event)">
     </div>
     <button onclick="agregarInput()">Agregar</button>
     <button onclick="borrarUltimoInput()">Borrar</button>
     <button onclick="generarHashtags()">Generar Hashtags</button>
     <button onclick="copiarHashtags()">Copiar</button>
-    <p id="hashtags"></p>
+    <div>
+        <p id="hashtags"></p>
+    </div>
 
     <script>
         function agregarInput() {
@@ -103,17 +123,17 @@
                 if (palabra) palabras.push(palabra);
             }
             if (palabras.length === 0) return;
-            
+
             let combinaciones = generarCombinaciones(palabras);
             combinaciones.sort((a, b) => (a.match(/_/g) || []).length - (b.match(/_/g) || []).length);
-            
+
             document.getElementById("hashtags").innerText = combinaciones.map(h => `#${h}`).join(' ');
         }
 
         function generarCombinaciones(palabras) {
             let resultados = [];
             let n = 1 << (palabras.length - 1);
-            
+
             for (let i = 0; i < n; i++) {
                 let hashtag = palabras[0];
                 for (let j = 1; j < palabras.length; j++) {
@@ -122,7 +142,7 @@
                 }
                 resultados.push(hashtag.toLowerCase());
             }
-            
+
             return resultados;
         }
 
@@ -138,4 +158,5 @@
         }
     </script>
 </body>
+
 </html>
