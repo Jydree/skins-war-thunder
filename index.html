@@ -1,36 +1,75 @@
 <!DOCTYPE html>
 <html lang="es">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Generador de Hashtags</title>
     <script src="script.js"></script>
-    <link rel="stylesheet" href="styles.css">
-</head>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
 
-<body>
+  <body>
     <h1>Generador de hashtags para War Thunder Live</h1>
-    <h4 style="margin-bottom: 2px;">Escribe en cada campo una palabra, letra o número clave para generar las variantes</h4>
-    <h4 style="margin-top: 0px;">Puedes usar las teclas Enter y Borrar en lugar de los botones para agregar o borrar las clave</h4>
+    <h4 style="margin-bottom: 2px">
+      Escribe en cada campo una palabra, letra o número clave para generar las
+      variantes
+    </h4>
+    <h4 style="margin-top: 0px">
+      Puedes usar las teclas Enter y Borrar en lugar de los botones para agregar
+      o borrar las clave
+    </h4>
     <div id="inputsContainer" class="input-container">
-        <input type="text" class="inputPalabra" placeholder="Ingresa una clave" onkeypress="manejarEnter(event)"
-            onkeydown="manejarBackspace(event)">
+      <input
+        type="text"
+        class="inputPalabra"
+        placeholder="Ingresa una clave"
+        onkeypress="manejarEnter(event)"
+        onkeydown="manejarBackspace(event)"
+      />
     </div>
     <div>
-        <button class="button-add-del" onclick="agregarInput()">Agregar</button>
-        <button class="button-add-del" onclick="borrarUltimoInput()">Borrar</button>
+      <button class="button-add-del" onclick="agregarInput()">Agregar</button>
+      <button class="button-add-del" onclick="borrarUltimoInput()">
+        Borrar
+      </button>
     </div>
-    <h4>Por ejemplo, si ingresaste "Mirage", "2000C" y "S5" como claves, se generarán los hashtag: #mirage2000cs5 #mirage_2000cs5 #mirage2000c_s5 #mirage_2000c_s5</h4>
+    <h4>
+      Por ejemplo, si ingresaste "Mirage", "2000C" y "S5" como claves, se
+      generarán los hashtag: #mirage2000cs5 #mirage_2000cs5 #mirage2000c_s5
+      #mirage_2000c_s5
+    </h4>
     <div>
-        <button class="button-menu" onclick="generarHashtags(false)">Generar</button>
-        <button class="button-menu" onclick="generarHashtags(true)">Agregar variantes</button>
-        <button class="button-menu" onclick="limpiarHashtags()">Limpiar</button>
-        <button class="button-menu button-menu-copy" onclick="copiarHashtags()">Copiar</button>
+      <button class="button-menu" onclick="generarHashtags(false)">
+        Generar
+      </button>
+      <button class="button-menu" onclick="generarHashtags(true)">
+        Agregar variantes
+      </button>
+      <button class="button-menu" onclick="limpiarHashtags()">Limpiar</button>
+      <button class="button-menu button-menu-copy" onclick="copiarHashtags()">
+        Copiar
+      </button>
     </div>
-    <h4>"Generar" borrará cualquier hashtag previo, "Agregar variantes" conservará los hashtags ya generados</h4>
+    <h4>
+      "Generar" borrará cualquier hashtag previo, "Agregar variantes" conservará
+      los hashtags ya generados
+    </h4>
     <div><p id="hashtags"></p></div>
-    <h4>De esta forma podemos tener combinaciones como: #mirage2000 #mirage_2000 #mirage2000cs5 #mirage_2000cs5 #mirage2000c_s5 #mirage_2000c_s5 #mirage20005f #mirage_20005f #mirage2000_5f #mirage_2000_5f</h4>
-</body>
-
+    <h4>
+      De esta forma podemos tener combinaciones como: #mirage2000 #mirage_2000
+      #mirage2000cs5 #mirage_2000cs5 #mirage2000c_s5 #mirage_2000c_s5
+      #mirage20005f #mirage_20005f #mirage2000_5f #mirage_2000_5f
+    </h4>
+    <div class="footer">
+      Creado por Nardel / Jydree |
+      <a
+        href="https://warthunder.com/en/community/userinfo/?nick=Jydree"
+        target="_blank"
+      >
+        War Thunder Profile
+      </a>
+      | <a href="https://x.com/NardelCC" target="_blank">Twitter</a> |
+      <a href="https://www.instagram.com/jydree" target="_blank">Instagram</a>
+    </div>
+  </body>
 </html>
