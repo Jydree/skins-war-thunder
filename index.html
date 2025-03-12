@@ -5,158 +5,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Generador de Hashtags</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: url('/images/AMX-30B.jpg') no-repeat center center fixed;
-            background-size: cover;
-            background-color: rgba(255, 255, 255, 0.6);
-            background-blend-mode: lighten;
-            color: black;
-            text-align: center;
-        }
-
-        h2 {
-            color: black;
-        }
-
-        p {
-            color: white;
-        }
-
-        #hashtags {
-            margin-top: 10px;
-            font-weight: bold;
-            background: rgba(0, 0, 0, 0.7);
-            padding: 10px;
-            display: inline-block;
-            border-radius: 5px;
-        }
-
-        .input-container {
-            margin-bottom: 10px;
-        }
-
-        input {
-            padding: 5px;
-            font-size: 16px;
-            margin: 5px;
-        }
-
-        button {
-            background: #b22222;
-            color: white;
-            border: none;
-            padding: 10px;
-            margin: 5px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-
-        button:hover {
-            background: #8b0000;
-        }
-    </style>
+    <script src="script.js"></script>
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
-    <h2>Generador de Hashtags para War Thunder</h2>
+    <h1>Generador de hashtags para War Thunder Live</h1>
+    <h4 style="margin-bottom: 2px;">Escribe en cada campo una palabra, letra o número clave para generar las variantes</h4>
+    <h4 style="margin-top: 0px;">Puedes usar las teclas Enter y Borrar en lugar de los botones para agregar o borrar las clave</h4>
     <div id="inputsContainer" class="input-container">
-        <input type="text" class="inputPalabra" placeholder="Ingrese una palabra" onkeypress="manejarEnter(event)"
+        <input type="text" class="inputPalabra" placeholder="Ingresa una clave" onkeypress="manejarEnter(event)"
             onkeydown="manejarBackspace(event)">
     </div>
-    <button onclick="agregarInput()">Agregar</button>
-    <button onclick="borrarUltimoInput()">Borrar</button>
-    <button onclick="generarHashtags()">Generar Hashtags</button>
-    <button onclick="copiarHashtags()">Copiar</button>
     <div>
-        <p id="hashtags"></p>
+        <button class="button-add-del" onclick="agregarInput()">Agregar</button>
+        <button class="button-add-del" onclick="borrarUltimoInput()">Borrar</button>
     </div>
-
-    <script>
-        function agregarInput() {
-            let container = document.getElementById("inputsContainer");
-            let input = document.createElement("input");
-            input.type = "text";
-            input.className = "inputPalabra";
-            input.placeholder = "Ingrese una palabra";
-            input.onkeypress = manejarEnter;
-            input.onkeydown = manejarBackspace;
-            container.appendChild(document.createElement("br"));
-            container.appendChild(input);
-            input.focus();
-        }
-
-        function borrarUltimoInput() {
-            let container = document.getElementById("inputsContainer");
-            let inputs = container.getElementsByClassName("inputPalabra");
-            if (inputs.length > 1) {
-                container.removeChild(inputs[inputs.length - 1].previousSibling);
-                container.removeChild(inputs[inputs.length - 1]);
-            }
-        }
-
-        function manejarEnter(event) {
-            if (event.key === "Enter") {
-                event.preventDefault();
-                agregarInput();
-            }
-        }
-
-        function manejarBackspace(event) {
-            let input = event.target;
-            let container = document.getElementById("inputsContainer");
-            let inputs = container.getElementsByClassName("inputPalabra");
-            if (event.key === "Backspace" && input.value === "" && inputs.length > 1) {
-                event.preventDefault();
-                container.removeChild(input.previousSibling);
-                container.removeChild(input);
-                inputs[inputs.length - 1].focus();
-            }
-        }
-
-        function generarHashtags() {
-            let inputs = document.getElementsByClassName("inputPalabra");
-            let palabras = [];
-            for (let input of inputs) {
-                let palabra = input.value.trim();
-                if (palabra) palabras.push(palabra);
-            }
-            if (palabras.length === 0) return;
-
-            let combinaciones = generarCombinaciones(palabras);
-            combinaciones.sort((a, b) => (a.match(/_/g) || []).length - (b.match(/_/g) || []).length);
-
-            document.getElementById("hashtags").innerText = combinaciones.map(h => `#${h}`).join(' ');
-        }
-
-        function generarCombinaciones(palabras) {
-            let resultados = [];
-            let n = 1 << (palabras.length - 1);
-
-            for (let i = 0; i < n; i++) {
-                let hashtag = palabras[0];
-                for (let j = 1; j < palabras.length; j++) {
-                    hashtag += (i & (1 << (j - 1))) ? "_" : "";
-                    hashtag += palabras[j];
-                }
-                resultados.push(hashtag.toLowerCase());
-            }
-
-            return resultados;
-        }
-
-        function copiarHashtags() {
-            let hashtags = document.getElementById("hashtags").innerText;
-            if (hashtags) {
-                navigator.clipboard.writeText(hashtags).then(() => {
-                    alert("Hashtags copiados al portapapeles");
-                }).catch(err => {
-                    console.error("Error al copiar: ", err);
-                });
-            }
-        }
-    </script>
+    <h4>Por ejemplo, si ingresaste "Mirage", "2000C" y "S5" como claves, se generarán los hashtag: #mirage2000cs5 #mirage_2000cs5 #mirage2000c_s5 #mirage_2000c_s5</h4>
+    <div>
+        <button class="button-menu" onclick="generarHashtags(false)">Generar</button>
+        <button class="button-menu" onclick="generarHashtags(true)">Agregar variantes</button>
+        <button class="button-menu" onclick="limpiarHashtags()">Limpiar</button>
+        <button class="button-menu button-menu-copy" onclick="copiarHashtags()">Copiar</button>
+    </div>
+    <h4>"Generar" borrará cualquier hashtag previo, "Agregar variantes" conservará los hashtags ya generados</h4>
+    <div><p id="hashtags"></p></div>
+    <h4>De esta forma podemos tener combinaciones como: #mirage2000 #mirage_2000 #mirage2000cs5 #mirage_2000cs5 #mirage2000c_s5 #mirage_2000c_s5 #mirage20005f #mirage_20005f #mirage2000_5f #mirage_2000_5f</h4>
 </body>
 
 </html>
